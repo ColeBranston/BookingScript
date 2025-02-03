@@ -10,7 +10,7 @@ _____________________________________________
 
 Also create and run the virtual environment: 
 
-python -m venv .venv 
+python -m venv .venv <br>
 ./.venv/Scripts/Activate.ps1
 
 -> To Install the dependancies run: pip install -r requirements.txt
