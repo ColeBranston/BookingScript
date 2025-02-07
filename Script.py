@@ -9,6 +9,89 @@ import time
 
 from dotenv import dotenv_values
 
+def addParticipants():
+    AddEmail = driver.find_element(By.ID, "__BVID__42")
+    AddEmail.send_keys("jbranst@uwo.ca")
+
+    # Wait until the table is present
+    table = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.TAG_NAME, "table"))
+    )
+
+    # Click the first entry in the table
+    first_entry = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located(
+            (By.XPATH, "//table/tbody/tr[1]/td[1]"))
+    )
+    first_entry.click()
+
+    AddEmail.send_keys("cbranst2@uwo.ca")
+
+    # Wait until the table is present
+    table = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.TAG_NAME, "table"))
+    )
+
+    # Click the first entry in the table
+    first_entry = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located(
+            (By.XPATH, "//table/tbody/tr[1]/td[1]"))
+    )
+    first_entry.click()
+
+    AddEmail.send_keys("ajoharap@uwo.ca")
+
+    # Wait until the table is present
+    table = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.TAG_NAME, "table"))
+    )
+
+    # Click the first entry in the table
+    first_entry = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located(
+            (By.XPATH, "//table/tbody/tr[1]/td[1]"))
+    )
+    first_entry.click()
+
+    AddEmail.send_keys("hyousse8@uwo.ca")
+
+    # Wait until the table is present
+    table = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.TAG_NAME, "table"))
+    )
+
+    # Click the first entry in the table
+    first_entry = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located(
+            (By.XPATH, "//table/tbody/tr[1]/td[1]"))
+    )
+    first_entry.click()
+
+    AddEmail.send_keys("mzhan775@uwo.ca")
+
+    # Wait until the table is present
+    table = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.TAG_NAME, "table"))
+    )
+
+    # Click the first entry in the table
+    first_entry = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located(
+            (By.XPATH, "//table/tbody/tr[1]/td[1]"))
+    )
+    first_entry.click()
+
+loginCred = {
+    "Monday": "Hadi",
+    "Tuesday": "Michael",
+    "Wednesday": "Jack",
+    "Thursday": "Cole",
+    "Friday": "Aaryan"
+}
+
+local_time = time.localtime()
+today = time.strftime("%A", local_time)
+
 # Load environment variables
 env = dotenv_values(".env")
 
@@ -25,10 +108,15 @@ button.click()
 
 # Enter username and password
 userField = driver.find_element(By.ID, "userId")
-userField.send_keys(f"{env['username']}")
+userField.send_keys(f"{env[f'{loginCred[today]}Username']}")
+
+print(f"Using: {env[f'{loginCred[today]}Username']}")
 
 passField = driver.find_element(By.ID, "password")
-passField.send_keys(f"{env['password']}")
+passField.send_keys(f"{env[f'{loginCred[today]}Password']}")
+
+print(f"Using: {env[f'{loginCred[today]}Password']}")
+
 
 # Submit the login form
 submitButton = driver.find_element(By.CLASS_NAME, "adt-primaryAction")
@@ -51,9 +139,6 @@ Rooms = {
     "ACEB-3450": [],
     "ACEB-4450": []
 }
-
-local_time = time.localtime()
-today = time.strftime("%A", local_time)
 
 RecTimes = {
     "Monday": "10:30 AM-12:30 PM",
@@ -78,7 +163,7 @@ if str(local_time.tm_mon + 1) in new_date.strftime('%m'):
     print("********\n*   Clicked    *\n********")
 
 # Click the other button
-OtherButton = WebDriverWait(driver, 10).until(
+OtherButton = WebDriverWait(driver, 20).until(
     EC.presence_of_all_elements_located((By.CLASS_NAME, "btn"))
 )[2]
 
@@ -169,26 +254,13 @@ for room, times in Rooms.items():
             By.CLASS_NAME, "btn-block")[0]
         AddAttendeesButton.click()
 
-        AddEmail = driver.find_element(By.ID, "__BVID__42")
-        AddEmail.send_keys("jbranst@uwo.ca")
-
-        # Wait until the table is present
-        table = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.TAG_NAME, "table"))
-        )
-
-        # Click the first entry in the table
-        first_entry = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located(
-                (By.XPATH, "//table/tbody/tr[1]/td[1]"))
-        )
-        first_entry.click()
+        addParticipants()
 
         requestRoom = driver.find_elements(By.TAG_NAME, "strong")[5]
 
-        requestRoom.click()
+        # requestRoom.click()
 
-        time.sleep(5)
+        time.sleep(20)
 
         break  # Ending the loop once the room and time has been selected
 
