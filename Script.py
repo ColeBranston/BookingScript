@@ -9,6 +9,7 @@ import time
 
 from dotenv import dotenv_values
 
+
 def addParticipants():
     AddEmail = driver.find_element(By.ID, "__BVID__42")
     AddEmail.send_keys("jbranst@uwo.ca")
@@ -80,6 +81,7 @@ def addParticipants():
             (By.XPATH, "//table/tbody/tr[1]/td[1]"))
     )
     first_entry.click()
+
 
 loginCred = {
     "Monday": "Hadi",
