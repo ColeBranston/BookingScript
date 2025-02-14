@@ -260,7 +260,7 @@ for room, times in Rooms.items():
 
         requestRoom = driver.find_elements(By.TAG_NAME, "strong")[5]
 
-        requestRoom.click()
+        requestRoom.click()  # Actually Submits the book request
 
         time.sleep(20)
 
