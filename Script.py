@@ -88,7 +88,7 @@ loginCred = {
     "Tuesday": "Michael",
     "Wednesday": "Jack",
     "Thursday": "Cole",
-    "Friday": "Aaryan"
+    "Friday": "Cole"
 }
 
 local_time = time.localtime()
@@ -260,7 +260,7 @@ for room, times in Rooms.items():
 
         requestRoom = driver.find_elements(By.TAG_NAME, "strong")[5]
 
-        # requestRoom.click()
+        requestRoom.click()
 
         time.sleep(20)
 
