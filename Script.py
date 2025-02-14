@@ -88,7 +88,7 @@ loginCred = {
     "Tuesday": "Michael",
     "Wednesday": "Jack",
     "Thursday": "Cole",
-    "Friday": "Cole"
+    "Friday": "Aaryan"
 }
 
 local_time = time.localtime()
