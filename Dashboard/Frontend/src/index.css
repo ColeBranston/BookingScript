@@ -1,0 +1,66 @@
+body {
+ width: 100%;
+ height: 100%;
+ font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+ background-color: #242424;
+ user-select: none;
+}
+
+.white {
+  color: white;
+}
+
+.formPage {
+  width: 100%;
+  height: 96vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.formContainer {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainInput {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: transparent;
+  text-decoration: none;
+  outline: none;
+  user-select: none;
+  border: none;
+  border-bottom: white 1px solid;
+  padding-bottom: 10px;
+  width: 50vw;
+  color: white;
+  font-size: large;
+}
+
+.mainInput :focus {
+  user-select: none;
+}
+
+/* Removes the Visibility (Eye) Toggle for the input form */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none; /* Removes the eye icon in Internet Explorer and Edge */
+}
+
+input[type="password"]::-webkit-clear-button,
+input[type="password"]::-webkit-caps-lock-indicator,
+input[type="password"]::-webkit-paste-button {
+  display: none; /* Removes the eye icon in Webkit-based browsers */
+}
+
+/* Submit Button */
+
+.hidden {
+  opacity: 0;
+}
