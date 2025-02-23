@@ -33,10 +33,10 @@ app.post('/api/create/entry', async (req, res) => { // Add async keyword here
     const response = await createEntry(Room, Date, Time); // Use await inside async function
 
     if (response == 201) {
-      res.status(201).send('Entry Created Successfully');
+      res.status(201).json({ message: 'Entry Created Successfully' }).send();
     } else {
       console.log(response);
-      res.status(500).send('Failed to create entry');
+      res.status(201).json({ message: 'Failed to create entry' }).send();
     }
   } catch (error) {
     console.error('Error creating entry:', error);
