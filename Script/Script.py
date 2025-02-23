@@ -6,9 +6,21 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support import expected_conditions as EC
 from datetime import datetime, timedelta
 import time
+import requests
 
 from dotenv import dotenv_values
 
+# Function to make POST request
+def make_post_request(room, date, time):
+    url = 'http://localhost:5000/post-entry'
+    data = {
+        'Room': room,
+        'Date': date,
+        'Time': time
+    }
+    response = requests.post(url, json=data)
+    print(response.json())
+    return response
 
 def addParticipants():
     AddEmail = driver.find_element(By.ID, "__BVID__42")
@@ -263,6 +275,8 @@ for room, times in Rooms.items():
         requestRoom.click()  # Actually Submits the book request
 
         time.sleep(20)
+
+        make_post_request(room, new_date.strftime('%Y-%m-%d'), RecTimes[f'{today}'])
 
         break  # Ending the loop once the room and time has been selected
 

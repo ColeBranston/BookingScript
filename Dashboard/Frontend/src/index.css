@@ -69,3 +69,68 @@ input[type="password"]::-webkit-paste-button {
 .deniedText {
   color: red;
 }
+
+/* Dashboard Page */
+
+.dashboard-container {
+  padding: 20px;
+  text-align: center;
+  color: #e0e0e0;
+}
+
+.entries-container {
+  display: flex;
+  flex-direction: column; /* Arrange cards in a vertical column */
+  align-items: center;
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 80vh; /* Limit the height of the container */
+  gap: 20px;
+  padding: 20px;
+  background-color: transparent; /* Transparent background */
+  border-radius: 10px;
+}
+
+.entry-card {
+  background: #e0e0e0; /* Lighter grey background color */
+  border: 1px solid #888;
+  border-radius: 10px;
+  padding: 20px;
+  width: 80%; /* Adjust card width to fit within the container */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: left;
+  transition: transform 0.2s, box-shadow 0.2s, opacity 0.6s ease-out, transform 0.6s ease-out; /* Add transition for hover and on-load effects */
+  opacity: 0; /* Initially hidden for animation */
+  animation: fadeDown 0.6s ease-out forwards; /* Fade-down animation */
+}
+
+.entry-card:hover {
+  transform: scale(1.01) !important; /* Scale up on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Enhance shadow on hover */
+}
+
+.entry-card h2 {
+  margin-top: 0;
+  font-size: 1.5em;
+  color: #444; /* Change header color to white */
+}
+
+.entry-card p {
+  margin: 5px 0;
+  font-size: 1.2em;
+  color: #444;
+}
+
+.entry-card:not(:last-child) {
+  margin-bottom: 20px; /* Add space between cards */
+}
+
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px); /* Start from above */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0); /* End at the original position */
+  }
+}
