@@ -109,6 +109,8 @@ input[type="password"]::-webkit-paste-button {
 }
 
 .entry-card {
+  display: flex;
+  justify-content: space-around;
   background: #e0e0e0; /* Lighter grey background color */
   border: 1px solid #888;
   border-radius: 10px;
@@ -151,4 +153,10 @@ input[type="password"]::-webkit-paste-button {
     opacity: 1;
     transform: translateY(0); /* End at the original position */
   }
+}
+
+.cardInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

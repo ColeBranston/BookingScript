@@ -169,13 +169,6 @@ current_date = datetime(
 # Add 7 days
 new_date = current_date + timedelta(days=7)
 
-# Click the next month button if needed
-if str(local_time.tm_mon + 1) in new_date.strftime('%m'):
-    nextMonthButton = driver.find_elements(By.CLASS_NAME, "flex-fill")[3]
-    nextMonthButton.click()
-
-    print("********\n*   Clicked    *\n********")
-
 # Click the other button
 OtherButton = WebDriverWait(driver, 20).until(
     EC.presence_of_all_elements_located((By.CLASS_NAME, "btn"))
@@ -189,6 +182,16 @@ CalenderButton = WebDriverWait(driver, 10).until(
 )
 
 CalenderButton.click()
+
+# Click the next month button if needed
+if str(local_time.tm_mon + 1) in new_date.strftime('%m'):
+    dummyWait = driver.find_elements(By.CLASS_NAME, "flex-fill")
+
+    nextMonthButton = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.CLASS_NAME, "flex-fill")))[3]
+
+    nextMonthButton.click()
+
+    print("********\n*   Clicked    *\n********")
 
 print(new_date.strftime('%Y-%m-%d'))
 
