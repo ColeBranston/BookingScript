@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 import { checkLogin } from '../contexts/isLoggedIn';
-import moment from 'moment'
+import moment from 'moment';
 
 const Dashboard = () => {
   const { isLoggedIn } = useContext(checkLogin);
@@ -32,7 +32,18 @@ const Dashboard = () => {
   }, []);
 
   const currentDate = moment().format('YYYY-MM-DD'); // Get the current date in YYYY-MM-DD format
-  console.log(currentDate)
+  console.log(currentDate);
+
+  // Image Assignment Hashmap
+  const image = {
+    "ACEB 2437": "../../public/assets/ACEB-2437.PNG",
+    "ACEB 2439": "../../public/assets/ACEB-2439.PNG",
+    "ACEB 2450": "../../public/assets/ACEB-2450.PNG",
+    "ACEB 2445": "../../public/assets/ACEB-2445.PNG",
+    "ACEB 2448": "../../public/assets/ACEB-2448.PNG",
+    "ACEB 3448": "../../public/assets/ACEB-3448.PNG",
+  };
+
   return (
     <>
       {isLoggedIn ? null : <Navigate to="/" />}
@@ -45,12 +56,17 @@ const Dashboard = () => {
               key={entry._id}
               style={{
                 animationDelay: `${index * 0.1}s`,
-                border: entry.Date == currentDate ? '3px solid red' : 'none'
+                border: entry.Date === currentDate ? '3px solid red' : 'none'
               }}
             >
+              <div className='cardInfo'>
               <h2>{entry.Room}</h2>
               <p>Date: {entry.Date}</p>
               <p>Time: {entry.Time}</p>
+              </div>
+              <div className='cardImage'>
+              <img src={image[entry.Room]} alt={entry.Room} /> {/* Include the image within the same parent element */}
+              </div>
             </div>
           ))}
         </div>
