@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { checkLogin } from '../contexts/isLoggedIn';
 import { Navigate } from 'react-router-dom';
 
@@ -22,12 +21,23 @@ const LoginForm = () => {
     if (response.ok) {
       setIsLoggedIn(true)
       setAccessDenied(false)
+      localStorage.setItem("user", password);
     } else {
       setAccessDenied(true)
     }
 
     setPassword(''); // Clears the password state
   };
+
+  useEffect(() => {
+    const user = localStorage.getItem("user"); //Gets the user from the local storage
+    if (user) { //If the user is indeed, logged in this will trigger refreshing the app for corresponding content
+        setIsLoggedIn(true)
+        console.log("Username found in localStorage:", user);
+      } else {
+        console.log("No username found in localStorage");
+    }
+  }, []);
 
   return (
     <>
