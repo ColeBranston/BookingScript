@@ -11,10 +11,12 @@ const app = express(); // Initialization
 const corsOptions = {
   origin: [
     'https://booking-script-frontend-fsdcymn20-colebranstons-projects.vercel.app', // Deployed frontend
+    'http://localhost:4173', // Local frontend
   ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // HTTP methods allowed
-  credentials: true, // Allow cookies or auth headers if needed
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
 };
+
 
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions)); // Handle preflight OPTIONS requests
