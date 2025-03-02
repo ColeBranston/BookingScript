@@ -12,7 +12,7 @@ const LoginForm = () => {
   const send = async (event) => {
     event.preventDefault();
 
-    const response = await fetch("https://dashboard-backend-a2i3.onrender.com/api/login", {method:"POST", headers:{
+    const response = await fetch("https://bookingbackend.vercel.app/api/login", {method:"POST", headers:{
       'Content-Type': 'application/json'
         }, body: JSON.stringify({
             "password" : password
