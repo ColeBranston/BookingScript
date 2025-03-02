@@ -10,7 +10,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchEntries = async () => {
       try {
-        const response = await fetch('https://dashboard-backend-a2i3.onrender.com/api/login/api/entries', {
+        const response = await fetch('https://dashboard-backend-a2i3.onrender.com/api/entries', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json'
