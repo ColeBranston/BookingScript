@@ -80,6 +80,8 @@ app.get('/api/test', (req, res) => {
   res.status(200).send('Endpoint Accessed');
 });
 
+app.get("/", (req, res) => res.send("Express on Vercel"));
+
 // Export the app instead of listening directly for deployment environments
 module.exports = app;
 
