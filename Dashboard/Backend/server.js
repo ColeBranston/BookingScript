@@ -4,6 +4,8 @@ const { createEntry, deleteEntry, getAllEntries } = require('./DB/Entries/entrie
 const connectDB = require('./DB/db');
 connectDB();
 
+require('dotenv').config()
+
 const app = express(); // Initialization
 
 app.use(cors());
@@ -20,7 +22,7 @@ app.use((req, res, next) => {
 app.post('/api/login', (req, res) => {
   const { password } = req.body;
   console.log(req.body);
-  if (password == 'Sonic888!') {
+  if (password == process.env.password) {
     res.status(200).send('Successful Login');
   } else {
     res.status(500).send('Wrong Password');
