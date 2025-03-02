@@ -80,8 +80,13 @@ app.get('/api/test', (req, res) => {
   res.status(200).send('Endpoint Accessed');
 });
 
-// Base route for general connectivity
 app.get("/", (req, res) => res.send("Express on Vercel"));
 
-// Export the app for serverless deployment
+// Export the app instead of listening directly for deployment environments
 module.exports = app;
+
+// For local development only: Uncomment this block to enable local server
+
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => console.log(`Listening on port ${PORT}.`));
+
