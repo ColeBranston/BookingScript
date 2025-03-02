@@ -96,6 +96,18 @@ input[type="password"]::-webkit-paste-button {
   color: #e0e0e0;
 }
 
+.entireCard {
+  display: flex;
+  flex-direction: column; /* Arrange cards in a vertical column */
+  align-items: center;
+  transition: 0.25s ease;
+}
+
+.entireCard:hover {
+  transition: 0.25s ease;
+  transform: scale(1.01); /* Scale up on hover */
+}
+
 .entries-container {
   display: flex;
   flex-direction: column; /* Arrange cards in a vertical column */
@@ -109,23 +121,40 @@ input[type="password"]::-webkit-paste-button {
 }
 
 .entry-card {
+  z-index: 1;
   display: flex;
   justify-content: space-around;
   background: #e0e0e0; /* Lighter grey background color */
   border: 1px solid #888;
   border-radius: 10px;
   padding: 20px;
-  width: 60%; /* Adjust card width to fit within the container */
+  width: 100vh; /* Adjust card width to fit within the container */
+  height: 25vh;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   text-align: left;
-  transition: transform 0.2s, box-shadow 0.2s, opacity 0.6s ease-out, transform 0.6s ease-out; /* Add transition for hover and on-load effects */
+  /* transition: transform 0.2s, box-shadow 0.2s, opacity 0.6s ease-out, transform 0.6s ease-out; */
   opacity: 0; /* Initially hidden for animation */
-  animation: fadeDown 0.6s ease-out forwards; /* Fade-down animation */
+  animation: fadeDownFront 0.6s ease-out forwards; /* Fade-down animation */
 }
-
-.entry-card:hover {
-  transform: scale(1.01) !important; /* Scale up on hover */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Enhance shadow on hover */
+ 
+.behind-card {
+  z-index: 0;
+  display: flex;
+  position: absolute;
+  justify-content: space-around;
+  background: #8d8d8dc2; /* Lighter grey background color */
+  border: 1px solid #888;
+  border-radius: 10px;
+  padding: 20px;
+  width: 100vh;/* Adjust card width to fit within the container */
+  text-align: left;
+  /* transition: transform 0.2s, box-shadow 0.2s, opacity 0.6s ease-out, transform 0.6s ease-out; */
+  opacity: 0; /* Initially hidden for animation */
+  animation: fadeDownBack 0.6s ease-out forwards; /* Fade-down animation */
+  height: 25vh;
+  margin-left: 0.75vw;
+  margin-top: 0.75vh;
+  /* filter: blur(1px); */
 }
 
 .entry-card h2 {
@@ -144,7 +173,18 @@ input[type="password"]::-webkit-paste-button {
   margin-bottom: 20px; /* Add space between cards */
 }
 
-@keyframes fadeDown {
+@keyframes fadeDownFront {
+  from {
+    opacity: 0.25;
+    transform: translateY(-20px); /* Start from above */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0); /* End at the original position */
+  }
+}
+
+@keyframes fadeDownBack {
   from {
     opacity: 0;
     transform: translateY(-20px); /* Start from above */
@@ -159,4 +199,9 @@ input[type="password"]::-webkit-paste-button {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.roomImage {
+  width: 80%;
+  border: 2px solid #888;
 }
