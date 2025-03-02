@@ -8,7 +8,14 @@ require('dotenv').config(); // Load environment variables
 
 const app = express(); // Initialization
 
-app.use(cors()); // Enable CORS for all routes
+const corsOptions = {
+  origin: 'https://booking-script-frontend-fsdcymn20-colebranstons-projects.vercel.app', // Your frontend URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
+  credentials: true, // Include credentials if needed
+};
+
+app.use(cors(corsOptions));
+
 
 // Middleware to parse JSON bodies
 app.use(express.json());
