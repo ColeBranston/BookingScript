@@ -4,6 +4,9 @@ body {
  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
  background-color: #242424;
  user-select: none;
+ display: flex;
+ justify-content: center;
+ align-items: center;
 }
 
 /* Scrollbar styling */
@@ -94,6 +97,10 @@ input[type="password"]::-webkit-paste-button {
   padding: 20px;
   text-align: center;
   color: #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .entireCard {
@@ -110,6 +117,7 @@ input[type="password"]::-webkit-paste-button {
 
 .entries-container {
   display: flex;
+  position: relative;
   flex-direction: column; /* Arrange cards in a vertical column */
   align-items: center;
   overflow-y: auto; /* Enable vertical scrolling */
@@ -118,6 +126,7 @@ input[type="password"]::-webkit-paste-button {
   padding: 20px;
   background-color: transparent; /* Transparent background */
   border-radius: 10px;
+  width: 100%;
 }
 
 .entry-card {
@@ -138,24 +147,21 @@ input[type="password"]::-webkit-paste-button {
 }
  
 .behind-card {
-  z-index: 0;
+  position: absolute; /* Ensure the card is removed from normal document flow */
+  z-index: 0; /* Place it behind entry cards */
   display: flex;
-  position: absolute;
   justify-content: space-around;
-  background: #8d8d8dc2; /* Lighter grey background color */
+  background: #8d8d8dc2; /* Lighter grey background */
   border: 1px solid #888;
   border-radius: 10px;
   padding: 20px;
-  width: 100vh;/* Adjust card width to fit within the container */
-  text-align: left;
-  /* transition: transform 0.2s, box-shadow 0.2s, opacity 0.6s ease-out, transform 0.6s ease-out; */
-  opacity: 0; /* Initially hidden for animation */
-  animation: fadeDownBack 0.6s ease-out forwards; /* Fade-down animation */
+  width: 100vh;
   height: 25vh;
   margin-left: 0.75vw;
   margin-top: 0.75vh;
-  /* filter: blur(1px); */
+  animation: fadeDownBack 0.6s ease-out forwards;
 }
+
 
 .entry-card h2 {
   margin-top: 0;
@@ -199,6 +205,7 @@ input[type="password"]::-webkit-paste-button {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 50%;
 }
 
 .roomImage {

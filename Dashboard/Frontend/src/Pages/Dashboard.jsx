@@ -36,12 +36,12 @@ const Dashboard = () => {
 
   // Image Assignment Hashmap
   const image = {
-    "ACEB 2437": "../../public/assets/ACEB-2437.PNG",
-    "ACEB 2439": "../../public/assets/ACEB-2439.PNG",
-    "ACEB 2450": "../../public/assets/ACEB-2450.PNG",
-    "ACEB 2445": "../../public/assets/ACEB-2445.PNG",
-    "ACEB 2448": "../../public/assets/ACEB-2448.PNG",
-    "ACEB 3448": "../../public/assets/ACEB-3448.PNG",
+    "ACEB 2437": "/assets/ACEB-2437.PNG",
+    "ACEB 2439": "/assets/ACEB-2439.PNG",
+    "ACEB 2450": "/assets/ACEB-2450.PNG",
+    "ACEB 2445": "/assets/ACEB-2445.PNG",
+    "ACEB 2448": "/assets/ACEB-2448.PNG",
+    "ACEB 3448": "/assets/ACEB-3448.PNG",
   };
 
   return (
