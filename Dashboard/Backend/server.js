@@ -1,44 +1,46 @@
 const express = require('express'); // Initialization
-const cors = require('cors'); // Adding cors
+const cors = require('cors'); // Adding CORS
 const { createEntry, deleteEntry, getAllEntries } = require('./DB/Entries/entries_functions');
-const connectDB = require('./DB/db');
+const connectDB = require('./DB/db'); // Database connection function
 connectDB();
 
-require('dotenv').config()
+require('dotenv').config(); // Load environment variables
 
 const app = express(); // Initialization
 
-app.use(cors());
+app.use(cors()); // Enable CORS for all routes
 
 // Middleware to parse JSON bodies
 app.use(express.json());
 
 // Middleware Function called every time a request occurs
-app.use((req, res, next) => { 
+app.use((req, res, next) => {
   console.log('Time: ', Date.now());
-  next(); // Required, directs the program to the next middleware function or to the rest of the code
+  next(); // Directs the program to the next middleware function or to the rest of the code
 });
 
+// Route to handle login requests
 app.post('/api/login', (req, res) => {
   const { password } = req.body;
   console.log(req.body);
-  if (password == process.env.password) {
+  if (password === process.env.password) { // Use strict equality for comparison
     res.status(200).send('Successful Login');
   } else {
-    res.status(500).send('Wrong Password');
+    res.status(401).send('Wrong Password'); // Use 401 status code for unauthorized access
   }
 });
 
-app.post('/api/create/entry', async (req, res) => { // Add async keyword here
+// Route to create a new entry
+app.post('/api/create/entry', async (req, res) => { // Add async keyword
   const { Room, Date, Time } = req.body;
   try {
     const response = await createEntry(Room, Date, Time); // Use await inside async function
 
-    if (response == 201) {
-      res.status(201).json({ message: 'Entry Created Successfully' }).send();
+    if (response === 201) { // Use strict equality for comparison
+      res.status(201).json({ message: 'Entry Created Successfully' }); // No need for .send() after .json()
     } else {
       console.log(response);
-      res.status(201).json({ message: 'Failed to create entry' }).send();
+      res.status(400).json({ message: 'Failed to create entry' }); // Use appropriate status code for errors
     }
   } catch (error) {
     console.error('Error creating entry:', error);
@@ -46,29 +48,43 @@ app.post('/api/create/entry', async (req, res) => { // Add async keyword here
   }
 });
 
-app.delete('/api/delete/entry', async (req, res) => { // Add async keyword here
+// Route to delete an entry
+app.delete('/api/delete/entry', async (req, res) => {
   const { Time } = req.body; // Assume you're sending the time in the request body
   try {
     const response = await deleteEntry(Time);
     if (response) {
-      res.status(200).send("Entry deleted successfully");
+      res.status(200).send('Entry deleted successfully');
     } else {
-      res.status(404).send("Entry not found");
+      res.status(404).send('Entry not found'); // Use 404 for not found
     }
   } catch (error) {
-    res.status(500).send("An error occurred while deleting the entry");
+    console.error('Error deleting entry:', error); // Add console log for debugging
+    res.status(500).send('An error occurred while deleting the entry');
   }
 });
 
-// Add a new route to get all entries
+// Route to fetch all entries
 app.get('/api/entries', async (req, res) => {
   try {
     const entries = await getAllEntries();
-    res.status(200).json(entries);
+    res.status(200).json(entries); // Send entries as JSON response
   } catch (error) {
-    res.status(500).send("An error occurred while fetching entries");
+    console.error('Error fetching entries:', error); // Add console log for debugging
+    res.status(500).send('An error occurred while fetching entries');
   }
 });
 
-// Listening for when a user connects to the API
-app.listen(4000, () => console.log('Listening on port 4000.'));
+// Test endpoint for debugging or basic connectivity
+app.get('/api/test', (req, res) => {
+  res.status(200).send('Endpoint Accessed');
+});
+
+// Export the app instead of listening directly for deployment environments
+module.exports = app;
+
+// For local development only: Uncomment this block to enable local server
+
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => console.log(`Listening on port ${PORT}.`));
+
