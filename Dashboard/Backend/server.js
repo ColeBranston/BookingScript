@@ -13,24 +13,12 @@ const corsOptions = {
     'https://booking-script-frontend-fsdcymn20-colebranstons-projects.vercel.app', // Deployed frontend
     'http://localhost:4173', // Local frontend
   ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // HTTP methods allowed
+  credentials: true, // Allow credentials (e.g., cookies, authorization headers)
 };
 
-
 app.use(cors(corsOptions));
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", req.headers.origin || "*");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.header("Access-Control-Allow-Credentials", "true");
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(204);
-  }
-  next();
-});
-
-
+app.options('*', cors(corsOptions)); // Handle preflight OPTIONS requests
 
 
 // Middleware to parse JSON bodies
