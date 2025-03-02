@@ -51,6 +51,7 @@ const Dashboard = () => {
         <h1>Dashboard</h1>
         <div className="entries-container">
           {entries.slice().reverse().map((entry, index) => (
+            <div className='entireCard'>
             <div
               className="entry-card"
               key={entry._id}
@@ -65,8 +66,15 @@ const Dashboard = () => {
               <p>Time: {entry.Time}</p>
               </div>
               <div className='cardImage'>
-              <img src={image[entry.Room]} alt={entry.Room} /> {/* Include the image within the same parent element */}
+              <img src={image[entry.Room]} alt={entry.Room} className='roomImage'/>
               </div>
+            </div>
+            <div 
+                className='behind-card' 
+                style={{
+                animationDelay: `${index * 0.1}s`,
+                border: entry.Date === currentDate ? '3px solid red' : 'none'
+              }}></div>
             </div>
           ))}
         </div>
