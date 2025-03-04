@@ -1,6 +1,8 @@
+![Python](https://img.shields.io/badge/Language-Python-blue)
+
 # Summary
 
-Automated selenium bot and dashboard for booking Western's Amit Chakma Engineering study rooms for students and faculty using **React + Vite**, **Node.js + Express.js**, and **MongoDB** Database. Additionally for backend maintainability uses **Mongoose** ODM. Relies on **Python** web hooks and **Flask** api run using my local machine's task scheduler to log in every day of the week, schedule a room specified to my classes and send send the message to my backend -> database.
+Automated selenium bot and dashboard for booking Western's Amit Chakma Engineering study rooms for students and faculty using **React + Vite**, **Node.js + Express.js**, and **MongoDB** Database. Additionally for backend maintainability uses **Mongoose** ODM. Relies on **Python** web hooks and **Flask** api run using my local machine's task scheduler to log in every day of the week, schedule a room specified to my classes and send the message to my backend -> database.
 
 # How To Run
 
