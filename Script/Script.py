@@ -279,7 +279,7 @@ for room, times in Rooms.items():
 
         time.sleep(20)
 
-        make_post_request(room, new_date.strftime('%Y-%m-%d'), RecTimes[f'{today}'])
+        make_post_request(room.replace('-', ' '), new_date.strftime('%Y-%m-%d'), RecTimes[f'{today}'])
 
         break  # Ending the loop once the room and time has been selected
 
