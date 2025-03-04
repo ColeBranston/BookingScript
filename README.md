@@ -1,4 +1,4 @@
-![Python](https://img.shields.io/badge/Language-Python-blue)
+![React](https://img.shields.io/badge/Framework-React-61DAFB?logo=react&logoColor=white)
 
 # Summary
 
