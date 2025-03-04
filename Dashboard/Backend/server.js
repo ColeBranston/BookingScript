@@ -8,18 +8,7 @@ require('dotenv').config(); // Load environment variables
 
 const app = express(); // Initialization
 
-const corsOptions = {
-  origin: [
-    'https://booking-script-frontend-fsdcymn20-colebranstons-projects.vercel.app', // Deployed frontend
-    'http://localhost:4173', // Local frontend
-  ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // HTTP methods allowed
-  credentials: true, // Allow credentials (e.g., cookies, authorization headers)
-};
-
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // Handle preflight OPTIONS requests
-
+app.use(cors());
 
 // Middleware to parse JSON bodies
 app.use(express.json());
