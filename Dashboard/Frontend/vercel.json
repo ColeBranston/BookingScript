@@ -23,5 +23,5 @@
         ]
       }
     ],
-    "public": "dist"
+    "public": true
   }
