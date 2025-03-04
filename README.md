@@ -15,6 +15,10 @@
 ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white)
 ![Flask](https://img.shields.io/badge/Flask-000000?logo=flask&logoColor=white)
 
+**Deployments**
+![Vercel](https://img.shields.io/badge/Vercel-000000?logo=vercel&logoColor=white)
+![MongoDB Atlas](https://img.shields.io/badge/MongoDB_Atlas-47A248?logo=mongodb&logoColor=white)
+
 # Summary
 
 Automated selenium bot and dashboard for booking Western's Amit Chakma Engineering study rooms for students and faculty using **React + Vite**, **Node.js + Express.js**, and **MongoDB** Database. Additionally for backend maintainability uses **Mongoose** ODM. Relies on **Python** web hooks and **Flask** api run using my local machine's task scheduler to log in every day of the week, schedule a room specified to my classes and send the message to my backend -> database.
