@@ -8,4 +8,4 @@ For each folder (except the backend folder in the Script directory) there is a *
 
 # Deployment
 
-**Current Production Deployment Found [Here](https://acebdashboard.vercel.app):**
+**Current Production Deployment Found [Here](https://acebdashboard.vercel.app)** (Good Luck Trying To Log In)
