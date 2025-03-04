@@ -28,7 +28,7 @@ and then trailing the bottom is the path for the chrome driver to run the seleni
 
     path = ""
 
-Therefore, for a single user it may looklike:
+Therefore, for a single user it may look like:
 
 ---
 
