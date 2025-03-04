@@ -18,7 +18,7 @@ Looks as follows:
 
 where:
 
-**MONGO_URI** is the mongo connection string
+**MONGO_URI** is the mongo connection string<br>
 **password** is the single password used to validate users
 
 and **PORT** is the port although its not neccessary cause vercel handles the port forwarding
@@ -27,7 +27,7 @@ and **PORT** is the port although its not neccessary cause vercel handles the po
 
 ---
 
-npm install
+npm install <br>
 node server.js
 
 ---

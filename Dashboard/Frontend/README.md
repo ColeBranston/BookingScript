@@ -8,7 +8,7 @@ Frontend dashboard for my booking script to display various room bookings/entrie
 
 ---
 
-npm install
+npm install<br>
 npm run dev
 
 ---
@@ -17,7 +17,7 @@ npm run dev
 
 ---
 
-npm run build
+npm run build<br>
 npm run preview
 
 ---
