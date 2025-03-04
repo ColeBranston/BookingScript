@@ -22,3 +22,12 @@ where:
 **password** is the single password used to validate users
 
 and **PORT** is the port although its not neccessary cause vercel handles the port forwarding
+
+# Run
+
+---
+
+npm install
+node server.js
+
+---
