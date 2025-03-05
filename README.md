@@ -14,6 +14,7 @@
 ![Express.js](https://img.shields.io/badge/Express.js-000000?logo=express&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white)
 ![Flask](https://img.shields.io/badge/Flask-000000?logo=flask&logoColor=white)
+![Selenium](https://img.shields.io/badge/selenium-automated%20testing-brightgreen)
 
 **Deployments:**
 
