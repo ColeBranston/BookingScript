@@ -16,6 +16,7 @@ set /a counter+=1
 echo %counter% > %counter_file%
 echo Counter value: %counter%
 
+git pull
 git add . 2>> error.log
 git commit -m "Making Changes" 2>> error.log
 git push 2>> error.log
