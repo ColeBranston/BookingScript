@@ -6,6 +6,8 @@ cd /d "C:\Users\Administrator\OneDrive\Desktop\BookingScript\BookingScript\Scrip
 python -m venv .venv
 call .\.venv\Scripts\activate
 
+pip install requirements.txt
+
 :: Run the Flask server in a new command window and capture the window title
 start "FlaskServer" /B cmd /c "python Backend\script_server.py"
 :: Pause to ensure the Flask server is up and running
