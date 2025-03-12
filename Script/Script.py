@@ -109,8 +109,12 @@ today = time.strftime("%A", local_time)
 env = dotenv_values(".env")
 
 # Set up the WebDriver
-service = Service(executable_path=f"{env['path']}")
-driver = webdriver.Chrome(service=service)
+service = Service(executable_path=f"{env['driverPath']}")
+options = Options()
+
+options.binary_location = f"{env['binaryPath']}"
+
+driver = webdriver.Chrome(service=service, options=options)
 
 # Open the webpage
 driver.get("https://rooms.eng.uwo.ca/")
