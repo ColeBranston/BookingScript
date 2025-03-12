@@ -37,3 +37,5 @@ Therefore, for a single user it may look like:
     path = ""
 
 ---
+
+The chrome driver is pre included with the repo, but download the coresponding browser at: https://www.filepuma.com/download/google_chrome_64bit_132.0.6834.160-44998/download/
