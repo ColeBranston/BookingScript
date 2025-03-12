@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.ui import Select
@@ -21,7 +22,6 @@ def make_post_request(room, date, time):
     response = requests.post(url, json=data)
     print(response.json())
     return response
-
 def addParticipants():
     AddEmail = driver.find_element(By.ID, "__BVID__42")
     AddEmail.send_keys("jbranst@uwo.ca")
@@ -93,7 +93,6 @@ def addParticipants():
             (By.XPATH, "//table/tbody/tr[1]/td[1]"))
     )
     first_entry.click()
-
 
 loginCred = {
     "Monday": "Hadi",
