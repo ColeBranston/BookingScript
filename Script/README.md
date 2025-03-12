@@ -34,7 +34,8 @@ Therefore, for a single user it may look like:
 
     <user>Username = ""
     <user>Password = ""
-    path = ""
+    driverPath = 'chromedriver.exe'
+    binaryPath = ''
 
 ---
 
