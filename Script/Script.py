@@ -93,6 +93,36 @@ def addParticipants():
             (By.XPATH, "//table/tbody/tr[1]/td[1]"))
     )
     first_entry.click()
+# Evaluation function to score the time slot
+def evaluate(time_slot):
+    # Example scoring logic: closer to recommended times = higher score
+    start_time, end_time = map(lambda x: datetime.strptime(x, '%I:%M %p'), time_slot.split('-'))
+    recommended_time = RecTimes[today].split('-')
+    recommended_start = datetime.strptime(recommended_time[0], '%I:%M %p')
+    score = -abs((start_time - recommended_start).total_seconds())
+    return score
+
+# Check if we've reached a terminal state
+def is_terminal_node(available_times):
+    return len(available_times) == 0
+
+# Minimax function to find the optimal time slot
+def minimax(available_times, depth, maximizing_player):
+    if depth == 0 or is_terminal_node(available_times):
+        return evaluate(available_times[0]) if available_times else float('-inf')
+    
+    if maximizing_player:
+        max_eval = float('-inf')
+        for slot in available_times:
+            evaluation = minimax(available_times[1:], depth - 1, False)
+            max_eval = max(max_eval, evaluation)
+        return max_eval
+    else:
+        min_eval = float('inf')
+        for slot in available_times:
+            evaluation = minimax(available_times[1:], depth - 1, True)
+            min_eval = min(min_eval, evaluation)
+        return min_eval
 
 loginCred = {
     "Monday": "Hadi",
@@ -287,6 +317,19 @@ for room, times in Rooms.items():
         break  # Ending the loop once the room and time has been selected
 
     elif len(times) >= 1:
-        pass
+        print(f"Evaluating time slots for room: {room}")
+        optimal_time = None
+        optimal_score = float('-inf')
+        
+        # Apply minimax to find the best time slot
+        for time_slot in times:
+            score = minimax([time_slot], depth=3, maximizing_player=True)
+            if score > optimal_score:
+                optimal_score = score
+                optimal_time = time_slot
+
+        print(f"Optimal time slot for {room} is {optimal_time} with score {optimal_score}")
+        
+        # Implement More From Here #
 
 driver.quit()
