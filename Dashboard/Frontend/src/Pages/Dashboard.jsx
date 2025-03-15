@@ -42,6 +42,7 @@ const Dashboard = () => {
     "ACEB 2445": "/assets/ACEB-2445.PNG",
     "ACEB 2448": "/assets/ACEB-2448.PNG",
     "ACEB 3448": "/assets/ACEB-3448.PNG",
+    "ACEB 4450": "/assets/ACEB-4450.PNG",
   };
 
   return (
