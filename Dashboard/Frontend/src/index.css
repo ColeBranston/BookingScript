@@ -9,6 +9,14 @@ body {
  align-items: center;
 }
 
+/* Hiding Image Select On All Images */
+img {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
 /* Scrollbar styling */
 .entries-container::-webkit-scrollbar {
   width: 8px; /* Set the width of the scrollbar */
