@@ -82,11 +82,85 @@ app.get('/api/test', (req, res) => {
 
 app.get("/", (req, res) => res.send("Express on Vercel"));
 
-// Export the app instead of listening directly for deployment environments
-module.exports = app;
+// __________________________For JWT Security___________________________________
+
+let users = [];
+
+const generateRefreshToken = (username) => {
+    return jwt.sign({ username }, 'jwtSecret', { expiresIn: '10m' });
+}
+
+const generateAccessToken = (username) => {
+    return jwt.sign({ username }, 'jwtSecret', { expiresIn: '1m' });
+}
+
+// app.post('/register', (req, res) => {
+//     const { username, password } = req.body;
+//     if (!username || !password) {
+//         return res.status(400).send('Invalid Credentials!'); 
+//     }
+//     users.push([username, password]);
+//     res.send('Your data was appended');
+// });
+
+app.post('/login', (req, res) => {
+    const { password } = req.body;
+    if (!password) {
+        return res.status(400).send('Invalid Credentials!');
+    }
+    if (password == process.env.password) {
+        const accessToken = generateAccessToken(password);
+        const refreshToken = generateRefreshToken(password);
+        // Assuming `res` is the response object from Express.js
+        res.cookie('refreshToken', refreshToken, {
+            httpOnly: true,
+            sameSite: 'None', // Adjust based on your cross-origin requirements
+            secure: true, // Set to true for HTTPS
+            maxAge: 1000 * 60 * 10 // 10 minutes
+        });
+        res.json({ accessToken });
+    } else {
+        res.status(401).send('Unauthorized');
+    }
+});
+
+app.post('/refresh-token', (req, res) => {
+    const refreshToken = req.cookies.refreshToken; // Extract token from HttpOnly cookie
+    if (!refreshToken) return res.status(401).json({ message: 'No refresh token provided' });
+  
+    jwt.verify(refreshToken, 'jwtSecret', (err, user) => {
+      if (err) return res.status(403).send("Invalid Refresh Token");
+  
+      const newAccessToken = generateAccessToken(user.username);
+      res.json({ accessToken: newAccessToken });
+    });
+  });
+
+const verifyJWT = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1]; // Extract token part from "Bearer <token>"
+  
+    if (!token) {
+        return res.status(401).send("Token is required");
+    }
+    jwt.verify(token, 'jwtSecret', (err, decoded) => {
+        if (err) {
+            return res.status(403).json({ auth: false, message: "Authorization failed" });
+        }
+        req.userID = decoded.username;
+        next();
+    });
+};
+
+app.get('/isUserAuth', verifyJWT, (req, res) => {
+    res.send("Hey you are authenticated");
+});
 
 // For local development only: Uncomment this block to enable local server
 
-// const PORT = process.env.PORT || 4000;
-// app.listen(PORT, () => console.log(`Listening on port ${PORT}.`));
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => console.log(`Listening on port ${PORT}.`));
 
+
+// // Export the app instead of listening directly for deployment environments
+// module.exports = app;
