@@ -1,5 +1,6 @@
 const express = require('express'); // Initialization
 const cors = require('cors'); // Adding CORS
+const jwt = require('jsonwebtoken');
 const { createEntry, deleteEntry, getAllEntries } = require('./DB/Entries/entries_functions');
 const connectDB = require('./DB/db'); // Database connection function
 connectDB();
@@ -8,7 +9,10 @@ require('dotenv').config(); // Load environment variables
 
 const app = express(); // Initialization
 
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  credentials: true
+}));
 
 // Middleware to parse JSON bodies
 app.use(express.json());
@@ -19,16 +23,16 @@ app.use((req, res, next) => {
   next(); // Directs the program to the next middleware function or to the rest of the code
 });
 
-// Route to handle login requests
-app.post('/api/login', (req, res) => {
-  const { password } = req.body;
-  console.log(req.body);
-  if (password === process.env.password) { // Use strict equality for comparison
-    res.status(200).send('Successful Login');
-  } else {
-    res.status(401).send('Wrong Password'); // Use 401 status code for unauthorized access
-  }
-});
+// DEPRECATED // Route to handle login requests
+// app.post('/api/login', (req, res) => {
+//   const { password } = req.body;
+//   console.log(req.body);
+//   if (password == process.env.password) { // Use strict equality for comparison
+//     res.status(200).send('Successful Login');
+//   } else {
+//     res.status(401).send('Wrong Password'); // Use 401 status code for unauthorized access
+//   }
+// });
 
 // Route to create a new entry
 app.post('/api/create/entry', async (req, res) => { // Add async keyword

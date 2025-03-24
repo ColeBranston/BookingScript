@@ -15,34 +15,47 @@ const LoginForm = () => {
 
   const send = async (event) => {
     event.preventDefault();
-
-    // const response = await fetch("https://bookingbackend.vercel.app/api/login", {method:"POST", headers:{
-    //   'Content-Type': 'application/json'
-    //     }, body: JSON.stringify({
-    //         "password" : password
-    //     })})
-
-    const response = await fetch("http://localhost:3000/login", {method:"POST", headers:{
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password }),
-        credentials: 'include'
-
-      }}
-      )
-
-    if (response.ok) {
-      const data = await res.json();
-      localStorage.setItem('accessToken', data.accessToken);
-      dispatch({ type: 'LOGIN', payload: data.accessToken });
-
-      setAccessDenied(false)
-
-    } else {
-      setAccessDenied(true)
+  
+    try {
+      const response = await fetch("http://localhost:3000/login", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ "password": password }),
+      });
+  
+      if (response.ok) {
+        const contentType = response.headers.get("Content-Type");
+  
+        let data;
+        if (contentType && contentType.includes("application/json")) {
+          data = await response.json(); // Parse JSON if the response is JSON
+        } else {
+          data = await response.text(); // Parse as text if it's not JSON
+        }
+  
+        console.log("Server Response:", data);
+  
+        // If the response contains an access token in JSON, handle it
+        if (typeof data === "object" && data.accessToken) {
+          localStorage.setItem('accessToken', data.accessToken);
+          dispatch({ type: 'LOGIN', payload: data.accessToken });
+          setAccessDenied(false);
+        } else {
+          console.log("Non-JSON successful response:", data);
+          setAccessDenied(false);
+        }
+  
+      } else {
+        setAccessDenied(true);
+      }
+  
+      setPassword(''); // Clears the password state
+    } catch (error) {
+      console.error("Error during login:", error);
+      setAccessDenied(true); // Handle errors properly
     }
-
-    setPassword(''); // Clears the password state
   };
 
   const verify = async () => {
@@ -128,32 +141,6 @@ const LoginForm = () => {
         </form>
       </div>
       {accessDenied? <p className='deniedText'>Access Denied</p> : <p className='hidden'>Access Denied</p>}
-    </div>
-
-    {/* This is a Break */}
-
-    <div className='w-[100%] h-screen flex flex-col justify-center items-center'>
-      <div className='md:w-[30%] lg:w-[30%] rounded-xl flex flex-col p-5 justify-center items-center mt-3 bg-[#d6f5d5]'>
-        <h1 className='my-5 text-[20px]'>Register</h1>
-        <form className='flex flex-col' onSubmit={register}>
-          <input ref={username1} required type='text' className='my-3 p-2 focus:outline-none rounded-xl focus:bg-[#c9e6c8]' placeholder='Username' />
-          <input ref={password1} required type='password' className='my-3 p-2 focus:outline-none rounded-xl focus:bg-[#c9e6c8]' placeholder='Password' />
-          <button className='bg-[#dbc1e8] rounded-full my-3 p-2 w-[50%] mx-auto hover:bg-[#eea4fc]' type='submit'>Submit</button>
-        </form>
-      </div>
-      <div className='md:w-[30%] lg:w-[30%] rounded-xl flex flex-col p-5 justify-center items-center mt-3 bg-[#d6f5d5]'>
-        <h1 className='my-5 text-[20px]'>Login</h1>
-        <form className='flex flex-col' onSubmit={login}>
-          <input ref={username2} required type='text' className='my-3 p-2 focus:outline-none rounded-xl focus:bg-[#c9e6c8]' placeholder='Username' />
-          <input ref={password2} required type='password' className='my-3 p-2 focus:outline-none rounded-xl focus:bg-[#c9e6c8]' placeholder='Password' />
-          <button className='bg-[#dbc1e8] rounded-full my-3 p-2 w-[50%] mx-auto hover:bg-[#eea4fc]' type='submit'>Submit</button>
-        </form>
-      </div>
-      <button onClick={() => verify()} className='bg-[#dbc1e8] rounded-full my-3 p-2 w-[10%] mx-auto hover:bg-[#eea4fc]'>Verify</button>
-      <button onClick={() => refreshAccessToken()} className='bg-[#dbc1e8] rounded-full my-3 p-2 w-[10%] mx-auto hover:bg-[#eea4fc]'>Generate Valid Access Token</button>
-      <button onClick={logout} className='bg-[#dbc1e8] rounded-full my-3 p-2 w-[10%] mx-auto hover:bg-[#eea4fc]'>Logout</button>
-      <button className='bg-[#dbc1e8] rounded-full my-3 p-2 w-[10%] mx-auto hover:bg-[#eea4fc]'><Link to="/home">HomePage</Link></button>
-      <p className='text-[red]'>{responseText}</p>
     </div>
     </>
   );
