@@ -44,7 +44,6 @@ const Dashboard = () => {
 
   return (
     <>
-      {isLoggedIn ? null : <Navigate to="/" />}
       <div className="dashboard-container">
         <h1>Dashboard</h1>
         <div className="entries-container">

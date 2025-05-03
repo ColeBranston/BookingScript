@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext, useReducer, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, useCallback } from 'react';
 
 const AuthContext = createContext();
 
@@ -17,7 +17,12 @@ const authReducer = (state, action) => {
     case 'SET_LOADING':
       return { ...state, loading: action.payload };
     case 'SET_AUTH':
-      return { ...state, isAuthenticated: action.payload.isAuthenticated, accessToken: action.payload.accessToken, loading: false };
+      return {
+        ...state,
+        isAuthenticated: action.payload.isAuthenticated,
+        accessToken: action.payload.accessToken,
+        loading: false
+      };
     default:
       return state;
   }
@@ -33,9 +38,10 @@ export const AuthProvider = ({ children }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:4000/isUserAuth', {
+      const response = await fetch('https://bookingbackend.vercel.app/isUserAuth', {
         method: 'GET',
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: { 'Authorization': `Bearer ${token}` },
+        credentials: 'include'
       });
 
       if (response.ok) {
@@ -53,34 +59,36 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const refreshToken = useCallback(async () => {
-    if (state.isAuthenticated) {
-      try {
-        const response = await fetch('http://localhost:4000/refresh-token', {
-          method: 'POST',
-          credentials: 'include' // Necessary if your refresh token is in an HttpOnly cookie
-        });
-  
-        if (response.ok) {
-          const data = await response.json();
-          localStorage.setItem('accessToken', data.accessToken);
-          dispatch({ type: 'SET_AUTH', payload: { isAuthenticated: true, accessToken: data.accessToken } });
-          return true;
-        } else {
-          throw new Error('Failed to refresh token');
-        }
-      } catch (error) {
-        console.error('Error refreshing token:', error);
-        dispatch({ type: 'LOGOUT' });
-        return false;
+    try {
+      const response = await fetch('https://bookingbackend.vercel.app/refresh-token', {
+        method: 'POST',
+        credentials: 'include'
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem('accessToken', data.accessToken);
+        dispatch({ type: 'SET_AUTH', payload: { isAuthenticated: true, accessToken: data.accessToken } });
+        return true;
+      } else {
+        throw new Error('Failed to refresh token');
       }
+    } catch (error) {
+      console.error('Error refreshing token:', error);
+      dispatch({ type: 'LOGOUT' });
+      return false;
     }
-  }, [state.isAuthenticated]);
+  }, []);
 
   useEffect(() => {
     const initAuth = async () => {
       dispatch({ type: 'SET_LOADING', payload: true });
       const token = localStorage.getItem('accessToken');
-      if (!(await verifyToken(token))) {
+
+      if (token) {
+        const valid = await verifyToken(token);
+        if (!valid) await refreshToken();
+      } else {
         await refreshToken();
       }
     };
@@ -91,10 +99,14 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const intervalId = setInterval(async () => {
       const token = localStorage.getItem('accessToken');
-      if (!token && !(await verifyToken(token))) {
+
+      if (!token) {
         await refreshToken();
+      } else {
+        const valid = await verifyToken(token);
+        if (!valid) await refreshToken();
       }
-    }, 500); //Check every 6 seconds
+    }, 6000); // every 6 seconds
 
     return () => clearInterval(intervalId);
   }, [verifyToken, refreshToken]);
@@ -105,11 +117,7 @@ export const AuthProvider = ({ children }) => {
     refreshToken
   };
 
-  return (
-    <AuthContext.Provider value={contextValue}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {

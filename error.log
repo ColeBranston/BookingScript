@@ -74,3 +74,5 @@ To https://github.com/ColeBranston/BookingScript.git
 warning: in the working copy of 'error.log', LF will be replaced by CRLF the next time Git touches it
 To https://github.com/ColeBranston/BookingScript.git
    103d571..51817c9  main -> main
+To https://github.com/ColeBranston/BookingScript.git
+   b6140c7..0b1d178  feature-JWT -> feature-JWT
