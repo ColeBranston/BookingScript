@@ -2,17 +2,23 @@ const express = require('express'); // Initialization
 const cors = require('cors'); // Adding CORS
 const jwt = require('jsonwebtoken');
 const { createEntry, deleteEntry, getAllEntries } = require('./DB/Entries/entries_functions');
-const connectDB = require('./DB/db'); // Database connection function
-connectDB();
+const cookieParser = require('cookie-parser');
 
 require('dotenv').config(); // Load environment variables
 
+const connectDB = require('./DB/db'); // Database connection function
+connectDB();
+
 const app = express(); // Initialization
 
+
 app.use(cors({
-  origin: '*',
+  origin: 'http://localhost:5173',
   credentials: true
 }));
+
+app.use(cookieParser()); // ✅ this will now parse cookies correctly
+
 
 // Middleware to parse JSON bodies
 app.use(express.json());

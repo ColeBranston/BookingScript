@@ -17,7 +17,7 @@ const LoginForm = () => {
     event.preventDefault();
   
     try {
-      const response = await fetch("http://localhost:3000/login", {
+      const response = await fetch("http://localhost:4000/login", {
         method: "POST",
         headers: {
           'Content-Type': 'application/json'
@@ -62,7 +62,7 @@ const LoginForm = () => {
     const accessToken = localStorage.getItem('accessToken');
   
     try {
-      const response = await fetch('http://localhost:3000/isUserAuth', {
+      const response = await fetch('http://localhost:4000/isUserAuth', {
         method: 'GET',
         headers: { 'Authorization': `Bearer ${accessToken}` }
       });
@@ -82,7 +82,7 @@ const LoginForm = () => {
 
   const refreshAccessToken = async () => {
     try {
-      const response = await fetch('http://localhost:3000/refresh-token', {
+      const response = await fetch('http://localhost:4000/refresh-token', {
         method: 'POST',
         credentials: 'include'
       });

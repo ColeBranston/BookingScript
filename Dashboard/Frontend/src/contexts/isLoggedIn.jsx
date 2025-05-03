@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/isUserAuth', {
+      const response = await fetch('http://localhost:4000/isUserAuth', {
         method: 'GET',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
   const refreshToken = useCallback(async () => {
     if (state.isAuthenticated) {
       try {
-        const response = await fetch('http://localhost:3000/refresh-token', {
+        const response = await fetch('http://localhost:4000/refresh-token', {
           method: 'POST',
           credentials: 'include' // Necessary if your refresh token is in an HttpOnly cookie
         });
