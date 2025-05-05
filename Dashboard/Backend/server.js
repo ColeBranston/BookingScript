@@ -16,7 +16,7 @@ const isProd = process.env.NODE_ENV === 'production';
 // Build allowed origins dynamically
 const ALLOWED_ORIGINS = [
   'http://localhost:5173',
-  process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null
+  process.env.VERCEL_URL ? `https://acebdashboard.vercel.app` : null
 ].filter(Boolean);
 
 // CORS middleware
