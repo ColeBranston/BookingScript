@@ -96,20 +96,20 @@ export const AuthProvider = ({ children }) => {
     initAuth();
   }, [verifyToken, refreshToken]);
 
-  useEffect(() => {
-    const intervalId = setInterval(async () => {
-      const token = localStorage.getItem('accessToken');
+  // useEffect(() => {
+  //   const intervalId = setInterval(async () => {
+  //     const token = localStorage.getItem('accessToken');
 
-      if (!token) {
-        await refreshToken();
-      } else {
-        const valid = await verifyToken(token);
-        if (!valid) await refreshToken();
-      }
-    }, 6000); // every 6 seconds
+  //     if (!token) {
+  //       await refreshToken();
+  //     } else {
+  //       const valid = await verifyToken(token);
+  //       if (!valid) await refreshToken();
+  //     }
+  //   }, 6000); // every 6 seconds
 
-    return () => clearInterval(intervalId);
-  }, [verifyToken, refreshToken]);
+  //   return () => clearInterval(intervalId);
+  // }, [verifyToken, refreshToken]);
 
   const contextValue = {
     state,
