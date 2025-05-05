@@ -42,10 +42,10 @@ app.use((req, res, next) => {
 
 // --- Utility JWT Generators ---
 const generateAccessToken = (username) =>
-  jwt.sign({ username }, process.env.JWT_SECRET || 'jwtSecret', { expiresIn: '1m' });
+  jwt.sign({ username }, process.env.JWT_SECRET || 'jwtSecret', { expiresIn: '30s' });
 
 const generateRefreshToken = (username) =>
-  jwt.sign({ username }, process.env.JWT_SECRET || 'jwtSecret', { expiresIn: '10m' });
+  jwt.sign({ username }, process.env.JWT_SECRET || 'jwtSecret', { expiresIn: '2m' });
 
 // --- Login Route ---
 app.post('/login', (req, res) => {
@@ -65,7 +65,7 @@ app.post('/login', (req, res) => {
       secure: isProd,                     // true in production (HTTPS), false locally
       sameSite: isProd ? 'None' : 'Lax',  // None in prod for cross-site, Lax locally
       path: '/',                          // available on all routes
-      maxAge: 10 * 60 * 1000              // 10 minutes
+      maxAge: 2 * 60 * 1000              // 2 minutes
     });
 
     return res.json({ accessToken });
@@ -95,7 +95,7 @@ app.post('/refresh-token', (req, res) => {
       secure: isProd,
       sameSite: isProd ? 'None' : 'Lax',
       path: '/',
-      maxAge: 10 * 60 * 1000
+      maxAge: 2 * 60 * 1000 // 2 minutes
     });
 
     return res.json({ accessToken: newAccessToken });
