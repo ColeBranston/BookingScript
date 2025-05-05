@@ -87,16 +87,6 @@ app.post('/refresh-token', (req, res) => {
     }
 
     const newAccessToken = generateAccessToken(decoded.username);
-    const newRefreshToken = generateRefreshToken(decoded.username);
-
-    // Refresh the cookie as well
-    res.cookie('refreshToken', newRefreshToken, {
-      httpOnly: true,
-      secure: isProd,
-      sameSite: isProd ? 'None' : 'Lax',
-      path: '/',
-      maxAge: 2 * 60 * 1000 // 2 minutes
-    });
 
     return res.json({ accessToken: newAccessToken });
   });
