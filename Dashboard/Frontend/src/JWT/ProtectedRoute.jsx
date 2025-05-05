@@ -8,7 +8,7 @@ const ProtectedRoute = ({ element: Component }) => {
   const { isAuthenticated, loading } = state;
 
   React.useEffect(() => {
-    if (isAuthenticated && !loading) {
+    if (!isAuthenticated && !loading) {
       console.log("Getting Refresh Token")
       refreshToken();
     }
