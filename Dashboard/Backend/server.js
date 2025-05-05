@@ -10,8 +10,24 @@ connectDB();
 
 const app = express();
 
+// Determine environment
+const isProd = process.env.NODE_ENV === 'production';
+
+// Build allowed origins dynamically
+const ALLOWED_ORIGINS = [
+  'http://localhost:5173',
+  process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null
+].filter(Boolean);
+
+// CORS middleware
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: (incomingOrigin, callback) => {
+    if (!incomingOrigin || ALLOWED_ORIGINS.includes(incomingOrigin)) {
+      callback(null, true);
+    } else {
+      callback(new Error(`CORS denied for origin ${incomingOrigin}`));
+    }
+  },
   credentials: true
 }));
 
@@ -43,13 +59,14 @@ app.post('/login', (req, res) => {
     const accessToken = generateAccessToken(username);
     const refreshToken = generateRefreshToken(username);
 
+    // Set refresh token cookie
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
-      sameSite: 'Lax',
-      secure: false,
-      path: '/',          // ← make it available on every route
-      maxAge: 10 * 60 * 1000
-    });    
+      secure: isProd,                     // true in production (HTTPS), false locally
+      sameSite: isProd ? 'None' : 'Lax',  // None in prod for cross-site, Lax locally
+      path: '/',                          // available on all routes
+      maxAge: 10 * 60 * 1000              // 10 minutes
+    });
 
     return res.json({ accessToken });
   } else {
@@ -60,13 +77,28 @@ app.post('/login', (req, res) => {
 // --- Refresh Token Route ---
 app.post('/refresh-token', (req, res) => {
   const token = req.cookies.refreshToken;
-  if (!token) return res.status(401).json({ message: 'No refresh token provided' });
+  if (!token) {
+    return res.status(401).json({ message: 'No refresh token provided' });
+  }
 
   jwt.verify(token, process.env.JWT_SECRET || 'jwtSecret', (err, decoded) => {
-    if (err) return res.status(403).send('Invalid Refresh Token');
+    if (err) {
+      return res.status(403).send('Invalid Refresh Token');
+    }
 
     const newAccessToken = generateAccessToken(decoded.username);
-    res.json({ accessToken: newAccessToken });
+    const newRefreshToken = generateRefreshToken(decoded.username);
+
+    // Refresh the cookie as well
+    res.cookie('refreshToken', newRefreshToken, {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: isProd ? 'None' : 'Lax',
+      path: '/',
+      maxAge: 10 * 60 * 1000
+    });
+
+    return res.json({ accessToken: newAccessToken });
   });
 });
 
@@ -75,11 +107,14 @@ const verifyJWT = (req, res, next) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
 
-  if (!token) return res.status(401).send('Access token required');
+  if (!token) {
+    return res.status(401).send('Access token required');
+  }
 
   jwt.verify(token, process.env.JWT_SECRET || 'jwtSecret', (err, decoded) => {
-    if (err) return res.status(403).json({ auth: false, message: 'Token invalid or expired' });
-
+    if (err) {
+      return res.status(403).json({ auth: false, message: 'Token invalid or expired' });
+    }
     req.userID = decoded.username;
     next();
   });
