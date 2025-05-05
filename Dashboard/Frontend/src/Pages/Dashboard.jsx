@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Navigate } from 'react-router-dom';
+import { checkLogin } from '../contexts/isLoggedIn';
 import moment from 'moment';
 
 const Dashboard = () => {
+  const { isLoggedIn } = useContext(checkLogin);
   const [entries, setEntries] = useState([]);
 
   useEffect(() => {
@@ -40,6 +42,7 @@ const Dashboard = () => {
     "ACEB 2445": "/assets/ACEB-2445.PNG",
     "ACEB 2448": "/assets/ACEB-2448.PNG",
     "ACEB 3448": "/assets/ACEB-3448.PNG",
+    "ACEB 4450": "/assets/ACEB-4450.PNG",
   };
 
   return (

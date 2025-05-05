@@ -137,6 +137,11 @@ app.get('/api/test', (req, res) => {
 
 app.get('/', (req, res) => res.send('Express on Vercel'));
 
-// --- Start Server ---
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => console.log(`Listening on port ${PORT}.`));
+// // For local development only: Uncomment this block to enable local server
+// const PORT = process.env.PORT || 4000;
+// app.listen(PORT, () => console.log(`Listening on port ${PORT}.`));
+// app.get("/", (req, res) => res.send("Express on Vercel"));
+
+
+// Export the app instead of listening directly for deployment environments
+module.exports = app;

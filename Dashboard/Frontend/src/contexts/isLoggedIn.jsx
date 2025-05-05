@@ -1,6 +1,7 @@
+
 import React, { createContext, useContext, useReducer, useEffect, useCallback } from 'react';
 
-const AuthContext = createContext();
+export const checkLogin = createContext();
 
 const initialState = {
   isAuthenticated: false,
