@@ -96,6 +96,9 @@ export const AuthProvider = ({ children }) => {
     initAuth();
   }, [verifyToken, refreshToken]);
 
+
+  //// USE IF YOU WANT TO AUTOMATICALLY REDIRECT TO THE FORM PAGE WHEN THE REFRESH TOKEN EXPIRES ////
+
   useEffect(() => {
     const intervalId = setInterval(async () => {
       const token = localStorage.getItem('accessToken');
@@ -109,7 +112,7 @@ export const AuthProvider = ({ children }) => {
     }, 6000); // every 6 seconds
 
     return () => clearInterval(intervalId);
-  }, [verifyToken]);
+  }, [verifyToken, refreshToken]);
 
   const contextValue = {
     state,

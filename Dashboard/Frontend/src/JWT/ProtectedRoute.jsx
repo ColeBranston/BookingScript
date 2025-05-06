@@ -1,4 +1,3 @@
-// src/ProtectedRoute.jsx
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../contexts/isLoggedIn';
@@ -7,18 +6,32 @@ const ProtectedRoute = ({ element: Component }) => {
   const { state, refreshToken } = useAuth();
   const { isAuthenticated, loading } = state;
 
-  React.useEffect(() => {
-    if (!isAuthenticated && !loading) {
-      console.log("Getting Refresh Token")
-      refreshToken();
-    }
-  }, [isAuthenticated, loading, refreshToken]);
+  const [triedRefresh, setTriedRefresh] = React.useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
 
-  if (loading) {
+  React.useEffect(() => {
+    const tryRefresh = async () => {
+      if (!isAuthenticated && !loading && !triedRefresh) {
+        console.log("Trying to refresh token...");
+        setRefreshing(true);
+        const success = await refreshToken();
+        setTriedRefresh(true);
+        setRefreshing(false);
+      }
+    };
+    tryRefresh();
+  }, [isAuthenticated, loading, triedRefresh, refreshToken]);
+
+  if (loading || refreshing) {
     return <div>Loading...</div>;
   }
 
-  return isAuthenticated ? Component : <Navigate to="/" replace />;
+  // ✅ Only redirect *after* a failed refresh
+  if (!isAuthenticated && triedRefresh) {
+    return <Navigate to="/" replace />;
+  }
+
+  return isAuthenticated ? Component : <div>Loading...</div>; // still waiting to try refresh
 };
 
 export default ProtectedRoute;
