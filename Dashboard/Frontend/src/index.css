@@ -213,6 +213,40 @@ input[type="password"]::-webkit-paste-button {
   border: 2px solid #888;
 }
 
+/* Pagination container */
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+/* Pagination buttons */
+.pagination-controls button {
+  background: transparent;
+  color: white;
+  border: 1px solid white;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 1rem;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Hover state */
+.pagination-controls button:hover:not(:disabled) {
+  background-color: white;
+  color: #242424;
+}
+
+/* Disabled state */
+.pagination-controls button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+
 /* =========================
    Mobile & Tablet Overrides
    ========================= */
