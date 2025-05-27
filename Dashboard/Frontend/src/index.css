@@ -212,3 +212,96 @@ input[type="password"]::-webkit-paste-button {
   width: 80%;
   border: 2px solid #888;
 }
+
+/* =========================
+   Mobile & Tablet Overrides
+   ========================= */
+
+/* Tablet: up to 768px */
+@media only screen and (max-width: 768px) {
+  .mainInput {
+    width: 80vw;
+    font-size: 1.1rem;
+    padding-bottom: 8px;
+  }
+
+  .dashboard-container {
+    padding: 10px;
+  }
+
+  .entries-container {
+    gap: 16px;
+    padding: 16px;
+    max-height: 70vh;
+  }
+
+  .entry-card,
+  .behind-card {
+    width: 90vw;
+    height: auto;
+    flex-direction: column;
+    padding: 16px;
+  }
+
+  .entry-card {
+    animation: none; /* simplify for small screens */
+  }
+
+  .cardInfo {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+  .roomImage {
+    width: 100%;
+    max-height: 150px;
+    object-fit: contain;
+    margin: 0 auto;
+  }
+}
+
+/* Mobile: up to 480px */
+@media only screen and (max-width: 480px) {
+  body {
+    flex-direction: column;
+    padding: 8px 0;
+  }
+
+  .formPage {
+    height: auto;
+    padding: 20px 0;
+  }
+
+  .formContainer {
+    flex-direction: column;
+  }
+
+  .mainInput {
+    width: 90vw;
+    font-size: 1rem;
+  }
+
+  .entries-container {
+    max-height: 60vh;
+    padding: 12px;
+  }
+
+  .entry-card,
+  .behind-card {
+    width: 95vw;
+    padding: 12px;
+  }
+
+  .cardInfo h2 {
+    font-size: 1.2em;
+  }
+
+  .cardInfo p {
+    font-size: 1em;
+  }
+
+  .roomImage {
+    max-height: 120px;
+  }
+}
