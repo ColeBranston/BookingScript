@@ -206,3 +206,6 @@ To https://github.com/ColeBranston/BookingScript.git
 warning: in the working copy of 'error.log', LF will be replaced by CRLF the next time Git touches it
 To https://github.com/ColeBranston/BookingScript.git
    b43d6e3..40cd81c  main -> main
+warning: in the working copy of 'error.log', LF will be replaced by CRLF the next time Git touches it
+To https://github.com/ColeBranston/BookingScript.git
+   40cd81c..52a0043  main -> main
