@@ -1,6 +1,6 @@
 {
   "Name": "Western Room Booker",
-  "Description": null,
-  "Cover_Image": "",
-  "Main_ReadMe": ""
+  "Description": "Automated selenium bot and dashboard for booking Western's Amit Chakma Engineering study rooms for students and faculty using React + Vite, Node.js + Express.js, and MongoDB Database.",
+  "Cover_Image": "./BookingScriptCoverImage.PNG",
+  "Main_ReadMe": "./README.md"
 }
